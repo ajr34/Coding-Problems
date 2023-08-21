@@ -2,19 +2,20 @@
 
 **All letters will be uppercase. non-alphabetic characters need to remain the same as from input.
 
-## Create an array of the alphabet for the string to match (*alphabetArr*).
+## Create an array of the alphabet for the string to match (*alphabet*).
 
-## Create a function that finds the index of each letter in *str*. The function takes in a source (*str*) and target (*alphabetArr*) as parameters.
+## Create a function that finds the index of a letter in *str*.
 
-- Create an empty array which will hold the index of string letters in the alphabet (*sourceAlphabetIndex*).
+## Create a function that will check if a character is a letter or not.
+- Return true or false
 
-- Iterate through the length of *source*.
+## Create a function that will decode *str*.
 
-    --  for each letter of *target*, if the letter is equal to the current element in *source*, push the index of that letter in the alphabet into *sourceAlphabetIndex*.
+- Create accumulator variable called *result*
 
-- Return *sourceAlphabetIndex*
+- Loop through each character in *str*
+    -- if character is not a letter, add to *result*
+    -- else, find the index of that character in the alphabet. 
+    -- Add or subtract 13 to that given index and add to *result*.
 
-
-## Create a function that will convert the index of each element in *sourceAlphabetIndex* to the correct index before decoding.
-
-** This function will effectively minus 13 from each number in the array. 
+- Return *result*
