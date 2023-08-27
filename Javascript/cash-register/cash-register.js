@@ -1,4 +1,5 @@
-let drawer = [
+//Test cid below
+let cid = [
   ["PENNY", 1.01],
   ["NICKEL", 2.05],
   ["DIME", 3.1],
@@ -10,6 +11,7 @@ let drawer = [
   ["ONE HUNDRED", 100],
 ];
 
+// Array of each currency value
 let currencyTable = [
   ["ONE HUNDRED", 100],
   ["TWENTY", 20],
@@ -22,49 +24,50 @@ let currencyTable = [
   ["PENNY", 0.01],
 ];
 
-const currencyCheck = (change) => {
+// Check what currencies are needed to give correct change
+const currencyCheck = (num) => {
   let accumulator = [];
-  currencyTable.forEach((currency) => {
-    let currencyVals = currency[1];
-    while (currencyVals <= change) {
-      change -= currencyVals;
-      accumulator.push(currency);
+  for (let i = 0; i < currencyTable.length; i++) {
+    let currencyVals = currencyTable[i][1];
+    while (currencyVals <= num) {
+      num -= currencyVals;
+      accumulator.push(currencyTable[i]);
     }
-  });
+  }
   return accumulator;
-  /*
-accumulator equals to (5.74 as change):
-  [ [ 'FIVE', 5 ],
-  [ 'QUARTER', 0.25 ],
-  [ 'QUARTER', 0.25 ],
-  [ 'DIME', 0.1 ],
-  [ 'DIME', 0.1 ],
-  [ 'PENNY', 0.01 ],
-  [ 'PENNY', 0.01 ],
-  [ 'PENNY', 0.01 ],
-  [ 'PENNY', 0.01 ] ]
-*/
-};
-let currencyForChange = currencyCheck(5.74);
-
-
-//Sum repeating currencies from currencyCheck() function 
-const sumCurrency = (arr, element) => {
-  return arr.filter((item) => item == element).length;
 };
 
-let test = sumCurrency(currencyForChange, currencyForChange[1]);
+// Array of currencies needed to give change
+let changeEaches = currencyCheck(5.25);
 
-/*
-test will equal to 2: the amount of times "[ 'QUARTER', 0.25 ]" appears in currencyForChange array.
-*/
+const cidUpdate = (arr) => {
+  const cidCopy = [...cid];
+  // Iterate each element in cid
+  for (let i = 0; i < cid.length; i++) {
+    let cidKey = cidCopy[i][0];
+    let cidVal = cidCopy[i][1];
+    // Iterate each change element to cid element
+    for (let j = 0; j < arr.length; j++) {
+      let changeKey = arr[j][0];
+      let changeVal = arr[j][1];
+      // If changeKey is the same as cidKey, replace cidVal by decrement cidVal by changeVal
+      if (changeKey == cidKey) {
+        let newVal = (cidVal -= changeVal);
+        cidCopy[i].splice(1, 1, newVal);
+      }
+    }
+  }
+  return cidCopy;
+};
+
+// Resulting cid when change is deducted
+let cidToMatch = cidUpdate(changeEaches);
 
 
-// ----------------------------------
-// function checkCashRegister(price, cash, cid) {
-//   let change;
-//   return change;
-// }
+
+
+
+
 
 // checkCashRegister(19.5, 20, [
 //   ["PENNY", 1.01],
