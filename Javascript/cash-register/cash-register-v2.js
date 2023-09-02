@@ -1,23 +1,3 @@
-const toSumInteger = (arr) => {
-  let total = 0;
-  for (let el of arr) {
-    total += el[1] * 100;
-  }
-  return total;
-};
-
-let test = [
-  ["PENNY", 1.01],
-  ["NICKEL", 2.05],
-  ["DIME", 3.1],
-  ["QUARTER", 4.25],
-  ["ONE", 90],
-  ["FIVE", 55],
-  ["TEN", 20],
-  ["TWENTY", 60],
-  ["ONE HUNDRED", 100],
-];
-
 let currencyTable = {
   "ONE HUNDRED": 10000,
   TWENTY: 2000,
@@ -30,6 +10,14 @@ let currencyTable = {
   PENNY: 1,
 };
 
+const toSumInteger = (arr) => {
+  let total = 0;
+  for (let el of arr) {
+    total += el[1] * 100;
+  }
+  return total;
+};
+
 const findChange = (change, arr) => {
   let result = [];
   let cidReverse = arr.reverse();
@@ -37,21 +25,17 @@ const findChange = (change, arr) => {
   for (let el of cidReverse) {
     // Define accumulator
     let accumulator = [el[0], 0];
-    //to Integers
+    // Convert cid vals to integers
     el[1] = el[1] * 100;
-    console.log(el[1]);
-    // Values of each currency
-    let currencyVals = currencyTable[el[0]];
-    let cidVals = el[1];
-    console.log(cidVals);
-    console.log(currencyVals);
-
-    while (change >= currencyVals && cidVals > 0) {
+    // Define vals as variables
+    let currencyVal = currencyTable[el[0]];
+    let cidVal = el[1];
+    while (change >= currencyVal && cidVal > 0) {
       // Minus currency val from change
-      change -= currencyVals;
+      change -= currencyVal;
       // minus currency val from cid value
-      cidVals -= currencyVals;
-      accumulator[1] += currencyVals / 100;
+      cidVal -= currencyVal;
+      accumulator[1] += currencyVal / 100;
     }
     if (accumulator[1] > 0) {
       result.push(accumulator);
@@ -60,39 +44,34 @@ const findChange = (change, arr) => {
   return result;
 };
 
-function checkCashRegister(price, cash, cid) {
-  let change = cash * 100 - price * 100;
-  console.log(change);
+const checkCashRegister = (price, cash, cid) => {
+  // Define change as integer
+  let changeInt = cash * 100 - price * 100;
+  // Define cid total as integer
   let cidTotal = toSumInteger(cid);
-  console.log(cidTotal);
-  console.log(cid);
-  // Define change eaches
-  let changeToGive = findChange(change, cid);
-  console.log(changeToGive);
-  if (change > cidTotal) {
+
+  // If change is over cid total
+  if (changeInt > cidTotal) {
     return { status: "INSUFFICIENT_FUNDS", change: [] };
     // If change is exact
-  } else if (change === cidTotal) {
+  } else if (changeInt === cidTotal) {
     return { status: "CLOSED", change: cid };
+    // If change is available in cid (change is less than total)
   } else {
-    return { status: "OPEN", change: changeToGive };
+    // Define change to give in each currency available from cid
+    let changeToGive = findChange(changeInt, cid);
+    // Define the sum of intended change to give (used to catch any errors from findChange() calculations)
+    const sumChangeToGive = changeToGive.reduce(
+      (acc, curr) => acc + curr[1],
+      0
+    );
+    // If change is the same as calculated sum of change to give
+    if (changeInt / 100 == sumChangeToGive.toFixed(2))
+      return { status: "OPEN", change: changeToGive };
   }
-}
-
-//Return OPEN ✔️
-console.log(
-  checkCashRegister(19.5, 20, [
-    ["PENNY", 1.01],
-    ["NICKEL", 2.05],
-    ["DIME", 3.1],
-    ["QUARTER", 4.25],
-    ["ONE", 90],
-    ["FIVE", 55],
-    ["TEN", 20],
-    ["TWENTY", 60],
-    ["ONE HUNDRED", 100],
-  ])
-);
+  // If change doesn't match the sum of change to give
+  return { status: "INSUFFICIENT_FUNDS", change: [] };
+};
 
 //Return OPEN ✔️
 console.log(
@@ -124,7 +103,7 @@ console.log(
   ])
 );
 
-//Return INSUFFICIENT ❌
+//Return INSUFFICIENT ✔️
 console.log(
   checkCashRegister(19.5, 20, [
     ["PENNY", 0.01],
@@ -139,7 +118,7 @@ console.log(
   ])
 );
 
-//Return CLOSED ❌
+//Return CLOSED ✔️
 console.log(
   checkCashRegister(19.5, 20, [
     ["PENNY", 0.5],

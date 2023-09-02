@@ -30,11 +30,15 @@ This version will convert all number values to integers first for easier calcula
 
 - Subtract (_price_ _ 100) from (*cash* _ 100) and determine the change to be given (_change_).
 - Define _cidTotal_ variable by invoking _toSumInteger_ with _cid_ as argument
-- Define _changeToGive_ variable by invoking _findChange_ with _change_ and _cid_ as arguments.
 
 - If _change_ is over _cidTotal_
-  -- return insufficient object ({ status: "INSUFFICIENT_FUNDS", change: [] })
+  * return insufficient object ({ status: "INSUFFICIENT_FUNDS", change: [] })
 - Else if _change_ is equal to _cidTotal_
-  -- return closed object ({ status: "CLOSED", change: _cid_ })
+  * return closed object ({ status: "CLOSED", change: _cid_ })
 - Else
-  -- return open object ({ status: "OPEN", change: _changeToGive_ })
+  * Define _changeToGive_ variable by invoking _findChange_ with _change_ and _cid_ as arguments.
+  * Define *sumChangeToGive* variable by using the reduce method onto *changeToGive* array. This variable will hold the sum of the calculated values from the *findChange* function and will be used to catch any errors.
+  * If change is the same as *sumChangeToGive*
+    * Return open object ({ status: "OPEN", change: _changeToGive_ })
+- If change doesn't match *sumChangeToGive*
+  * Return insufficient object ({ status: "INSUFFICIENT_FUNDS", change: [] })
