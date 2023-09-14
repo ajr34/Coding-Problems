@@ -1,12 +1,14 @@
 :root {
   --border-radius: 1rem;
   --modal-width: 70%;
-  --color-secondary: #ffbf7b;
+  --color-primary: #dcd5be;
+  --color-secondary: #30231f;
   --color-light: #eff1f2;
   --color-dark: #333434;
-  --color-success: #41e04b;
-  --color-success-hover: #34d13f;
-  --color-warning: #dc4234;
+  --color-success: #77ba71;
+  --color-success-hover: #add0aa;
+  --color-warning: #eba550;
+  --color-danger: #ec4a3e;
 }
 
 html {
@@ -65,31 +67,32 @@ body {
 }
 
 .btn--card__read {
+  color: var(--color-light);
   margin-top: 4rem;
 }
 
 .btn--card__remove {
   margin-top: 1rem;
-  color: #fff;
-  background: var(--color-warning);
+  color: var(--color-light);
+  background: var(--color-danger);
 }
 
 .book__title {
   font-size: 2rem;
-  color: #fff;
+  color: var(--color-light);
 }
 
 .book__author {
   font-style: italic;
   font-size: 1.4rem;
-  color: var(--color-dark);
+  color: var(--color-light);
   padding-top: 1rem;
 }
 
 .book__pages {
   padding-top: 2rem;
   font-weight: bold;
-  color: var(--color-dark);
+  color: var(--color-light);
   font-size: 1.2rem;
   text-align: right;
 }
@@ -107,7 +110,7 @@ body {
 
 .modal {
   align-items: center;
-  background: var(--color-light);
+  background: var(--color-primary);
   padding: 4rem 2rem;
   border-radius: var(--border-radius);
   position: absolute;
@@ -158,4 +161,11 @@ label {
 
 .hidden {
   display: none;
+}
+
+.read-true {
+  background: var(--color-success);
+}
+.read-false {
+  background: var(--color-warning);
 }

@@ -81,11 +81,13 @@ const readBookToggle = (el) => {
       if (el.getAttribute("data-is-read") && bookObj.isRead) {
         el.setAttribute("data-is-read", false);
         bookObj.isRead = false;
-        // Need to change read button inner text
+        el.innerText = "NOT READ YET";
+        el.classList.replace("read-true", "read-false");
       } else {
         el.setAttribute("data-is-read", true);
         bookObj.isRead = true;
-        // Need to change read button inner text
+        el.innerText = "ALREADY READ";
+        el.classList.replace("read-false", "read-true");
       }
     }
   }
@@ -116,7 +118,9 @@ const update = (objArr) => {
     <h2 class="book__title" data-title="${book.title}">${book.title}</h2>
     <h3 class="book__author" data-author="${book.author}">${book.author}</h3>
     <p class="book__pages" data-pages="${book.pages}">${book.pages} pages</p>
-    <button class="btn btn--card__read" data-is-read="${
+    <button class=" ${
+      book.isRead ? "read-true" : "read-false"
+    } btn btn--card__read" data-is-read="${
       book.isRead
     }" onclick="readBookToggle(this)">${book.readStatus()}</button>
     <button class="btn btn--card__remove" onclick="removeBook(this)">REMOVE</button>
