@@ -38,6 +38,11 @@ const userInput = document.querySelectorAll("input");
 const submitBtn = document.querySelector(".modal__submit");
 const booksContainer = document.querySelector(".book__container");
 
+const inputTitle = document.querySelector('[name="book-title"]');
+const inputAuthor = document.querySelector('[name="book-author"]');
+const inputPages = document.querySelector('[name="book-pages"]');
+const inputReadStatus = document.querySelector('[name="read-status"]');
+
 //Clear input fields
 const clearInput = () => {
   for (const input of userInput) {
@@ -63,9 +68,13 @@ submitBtn.addEventListener("click", () => {
 // Event handler to remove book
 const removeBook = (el) => {
   let card = el.parentNode;
-  let cardDataTitle = card.firstElementChild.dataset.title;
+  let nodes = card.childNodes;
+
+  let cardTitle = nodes[1].innerText;
+  let cardAuthor = nodes[3].innerText;
+
   for (const bookObj of myLibrary) {
-    if (bookObj.title == cardDataTitle) {
+    if (bookObj.title == cardTitle && bookObj.author == cardAuthor) {
       let index = myLibrary.indexOf(bookObj);
       myLibrary.splice(index, 1);
       card.remove();
@@ -73,11 +82,16 @@ const removeBook = (el) => {
   }
 };
 
+// Event handler to toggle card read status
 const readBookToggle = (el) => {
   let card = el.parentNode;
-  let cardDataTitle = card.firstElementChild.dataset.title;
+  let nodes = card.childNodes;
+
+  let cardTitle = nodes[1].innerText;
+  let cardAuthor = nodes[3].innerText;
+
   for (const bookObj of myLibrary) {
-    if (bookObj.title == cardDataTitle) {
+    if (bookObj.title == cardTitle && bookObj.author == cardAuthor) {
       if (el.getAttribute("data-is-read") && bookObj.isRead) {
         el.setAttribute("data-is-read", false);
         bookObj.isRead = false;
@@ -96,17 +110,14 @@ const readBookToggle = (el) => {
 //Add to myLibrary array
 const addBookToLibrary = () => {
   let acc = [];
-  //INDEX LEGEND: 0 = title, 1 = author, 2 = pages, 3 = pages, 4 = read status
-  for (let i = 0; i < userInput.length; i++) {
-    let readStatus = userInput[3].checked;
-    if (i <= 2) {
-      acc.push(userInput[i].value);
-    } else if (i == 3 && readStatus == true) {
-      acc.push(true);
-    } else {
-      acc.push(false);
-    }
+  acc.push(inputTitle.value, inputAuthor.value, inputPages.value);
+
+  if (inputReadStatus.checked) {
+    acc.push(true);
+  } else {
+    acc.push(false);
   }
+
   const newBookObj = new Book(...acc);
   myLibrary.push(newBookObj);
 };
