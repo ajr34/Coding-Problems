@@ -9,7 +9,7 @@
   </head>
   <body>
     <h1 class="app__title">Library App</h1>
-    <section class="app flex flex-col gap">
+    <section class="app flex flex-col">
       <button id="add-book" class="btn">ADD NEW BOOK</button>
       <!-- BOOK CONTAINER -->
       <div class="book__container flex gap">
@@ -20,9 +20,15 @@
     <!-- MODAL -->
     <div class="modal__container hidden">
       <div class="modal flex flex-col gap" onclick="event.stopPropagation()">
-        <input type="text" name="book-title" id="" placeholder="Title" />
-        <input type="text" name="book-author" id="" placeholder="Author" />
-        <input type="number" name="book-pages" id="" placeholder="Pages" />
+        <input type="text" name="book-title" placeholder="Title" />
+        <input type="text" name="book-author" placeholder="Author" />
+        <input
+          type="number"
+          name="book-pages"
+          min="0"
+          max="10000"
+          placeholder="Pages"
+        />
         <div class="read-status__container flex gap">
           <label for="read-status">Have you read it?</label>
           <input type="checkbox" name="read-status" id="" />
@@ -30,7 +36,6 @@
         <button class="btn modal__submit">SUBMIT</button>
       </div>
     </div>
-
     <script src="main.js"></script>
   </body>
 </html>

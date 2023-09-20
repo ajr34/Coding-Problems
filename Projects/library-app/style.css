@@ -51,6 +51,7 @@ body {
 
 .app {
   padding-top: 4rem;
+  gap: 6rem;
 }
 
 /* BOOK CARDS */
@@ -168,4 +169,28 @@ label {
 }
 .read-false {
   background: var(--color-warning);
+}
+
+.input-error::placeholder {
+  color: red;
+}
+
+@media screen and (min-width: 800px) {
+  .app {
+    align-items: center;
+  }
+  #add-book {
+    /* align-self: center; */
+    padding: 2rem;
+    min-width: 30rem;
+  }
+
+  .book__card,
+  .modal {
+    width: 30rem;
+  }
+  .book__container {
+    max-width: 110rem;
+    justify-content: center;
+  }
 }
